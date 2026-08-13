@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 - Portfolio professionalization
+
+- Added GitHub Actions CI with Ruff, PyTest and coverage.
+- Added stronger diagnostics tests for simulation config, degraded ports, detected ports and summaries.
+- Polished README badges, examples and hardware-independent evaluation notes.
+
 ## v0.2.0 - Simulation and real-mode diagnostics foundation
 
 - Added serial configuration with baud rate, timeout and mode.
