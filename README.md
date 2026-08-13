@@ -1,71 +1,87 @@
 # IoT Serial Diagnostics Tool
 
-Independent public portfolio project for **Python**, **IoT diagnostics**, **serial tooling** and **hardware-friendly simulation**.
+[![CI](https://github.com/guilherme-lacerda-tech/iot-serial-diagnostics-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/guilherme-lacerda-tech/iot-serial-diagnostics-tool/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+[![Release](https://img.shields.io/github/v/release/guilherme-lacerda-tech/iot-serial-diagnostics-tool)](https://github.com/guilherme-lacerda-tech/iot-serial-diagnostics-tool/releases)
+[![License](https://img.shields.io/github/license/guilherme-lacerda-tech/iot-serial-diagnostics-tool)](LICENSE)
 
-This repository was created from scratch with synthetic port data. It does not contain corporate code, real data, private endpoints, credentials, logs or proprietary rules.
+Simulation-first serial diagnostics tool for generic IoT and lab workflows.
 
-## Problem
+## Why / Problem
 
-Serial troubleshooting needs repeatable checks, clear configuration and evidence capture even when hardware is not available.
+Hardware diagnostics should be demonstrable even when no device is connected. This project provides a safe simulation mode and an optional real inventory mode.
 
-## What It Demonstrates
+## Features
 
-- Simulation mode that works without hardware.
-- Optional real-mode serial inventory through `pyserial`.
+- Simulation mode using synthetic port inventory.
+- Optional real-mode inventory through `pyserial`.
 - Baud rate and timeout configuration.
-- Health checks for detected, healthy, degraded and unavailable ports.
-- JSON diagnostic report with synthetic evidence.
-- Focused tests for simulation behavior.
+- Health states: healthy, degraded, unavailable and detected.
+- Synthetic evidence capture.
+- JSON diagnostic report.
+- CI with Ruff, PyTest and coverage.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    A["Port inventory"] --> B["Health check"]
-    B --> C["Evidence capture"]
-    C --> D["JSON report"]
+    Config["Baud / timeout"] --> Inventory["Port inventory"]
+    Inventory --> Health["Health check"]
+    Health --> Evidence["Evidence"]
+    Evidence --> Report["JSON report"]
 ```
 
-See [docs/architecture.md](docs/architecture.md) for details.
+## Tech Stack
 
-## Stack
+Current: `Python` `JSON` `Serial diagnostics` `pyserial optional` `PyTest` `Ruff`
 
-`Python` `JSON` `Serial diagnostics` `pyserial optional` `PyTest`
+Planned: guarded real read/write checks and Markdown report export.
 
-## Run Locally
+## Quick Start
 
 ```powershell
-python -m pip install -e .
+python -m pip install -e ".[dev]"
 python examples/run_demo.py
 ```
 
-## Optional Real Mode
+## Optional Real Inventory
 
 ```powershell
 python -m pip install -e ".[serial]"
 ```
 
-Real mode currently enumerates ports only. The default demonstration remains simulation mode.
+Real mode currently enumerates ports only. The default demo remains simulation mode.
 
-## Run Tests
+## Tests
 
 ```powershell
-python -m pip install -e ".[dev]"
-pytest
+python -m pytest --cov --cov-report=term-missing
+python -m ruff check .
 ```
 
-## Technical Decisions
+## Example Output
 
-- Simulation mode is the default because the project must be demonstrable without hardware.
-- `pyserial` is optional because not every environment has serial devices.
-- Reports use only synthetic evidence unless a future real-mode read feature is explicitly added.
+```text
+Ports checked: 3
+Healthy ports: 2
+```
+
+## Project Structure
+
+- `src/iot_serial_diagnostics_tool/diagnostics.py`: config, inventory, health and reporting.
+- `data/sample/ports.json`: synthetic port inventory.
+- `tests`: simulation, status and summary tests.
+
+## Engineering Decisions
+
+- Simulation mode is the default because the project must work without hardware.
+- `pyserial` is optional because CI and recruiters may not have serial devices.
+- Reports use synthetic evidence unless future real-mode reads are explicitly enabled.
 
 ## Roadmap
 
-- Add guarded real read/write checks.
-- Add report export in Markdown.
-- Add hardware bench notes with generic public wiring only.
+See [ROADMAP.md](ROADMAP.md).
 
-## Security and Independence
+## Security
 
-See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
+The repository does not contain real hardware logs, serial captures, customer data or private identifiers.
