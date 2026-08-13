@@ -1,0 +1,9 @@
+[project]
+name = "iot-serial-diagnostics-tool"
+version = "0.1.0"
+description = "Generic serial and USB diagnostics tool using synthetic port data."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
