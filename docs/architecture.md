@@ -1,30 +1,24 @@
-    # Architecture
+# Architecture
 
-    ## Design Goal
+## Design Goal
 
-    Provide a generic diagnostics foundation for serial/USB checks in a Windows-friendly workflow.
+Provide a small serial diagnostics workflow that can be demonstrated in simulation mode and extended to real hardware when available.
 
-    ## Current Boundaries
+## Flow
 
-    - Standard library first.
-    - Synthetic input only.
-    - Generated output ignored by Git.
-    - No real systems, endpoints or credentials.
+```mermaid
+flowchart LR
+    Config["Baud rate and timeout"] --> Inventory["Port inventory"]
+    Inventory --> Health["Health check"]
+    Health --> Evidence["Synthetic evidence capture"]
+    Evidence --> Report["JSON report"]
+```
 
-    ## Decisions
+## Modes
 
-    - Keep hardware adapters optional.
-- Separate synthetic checks from real COM access.
-- Never include real logs.
+- `simulation`: reads synthetic port inventory from `data/sample/ports.json`.
+- `real`: enumerates local serial ports through optional `pyserial`; it does not require real reads yet.
 
-    ## Future Layers
+## Boundaries
 
-    ```mermaid
-    flowchart TB
-        A["Mock inputs"] --> B["Collector / Loader"]
-        B --> C["Domain validation"]
-        C --> D["Rules / Processing"]
-        D --> E["Persistence"]
-        E --> F["API / Reporting"]
-        F --> G["Automation workflows"]
-    ```
+The default workflow never depends on connected hardware and never uses real logs.

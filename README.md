@@ -1,77 +1,71 @@
-    # IoT Serial Diagnostics Tool
+# IoT Serial Diagnostics Tool
 
-    Independent public portfolio project for **Python**, **automation**,
-    **systems integration** and **solutions engineering**.
+Independent public portfolio project for **Python**, **IoT diagnostics**, **serial tooling** and **hardware-friendly simulation**.
 
-    This repository was created from scratch with a fictional domain and
-    synthetic data. It does not contain corporate code, real data, private
-    endpoints, credentials, logs or proprietary rules.
+This repository was created from scratch with synthetic port data. It does not contain corporate code, real data, private endpoints, credentials, logs or proprietary rules.
 
-    ## Problem
+## Problem
 
-    Hardware troubleshooting needs repeatable checks and evidence without real device logs.
+Serial troubleshooting needs repeatable checks, clear configuration and evidence capture even when hardware is not available.
 
-    ## Objective
+## What It Demonstrates
 
-    Provide a generic diagnostics foundation for serial/USB checks in a Windows-friendly workflow.
+- Simulation mode that works without hardware.
+- Optional real-mode serial inventory through `pyserial`.
+- Baud rate and timeout configuration.
+- Health checks for detected, healthy, degraded and unavailable ports.
+- JSON diagnostic report with synthetic evidence.
+- Focused tests for simulation behavior.
 
-    ## Current Features
+## Architecture
 
-    - Synthetic port inventory.
-- Health checks.
-- Generated diagnostic report.
-- Windows-oriented documentation.
+```mermaid
+flowchart LR
+    A["Port inventory"] --> B["Health check"]
+    B --> C["Evidence capture"]
+    C --> D["JSON report"]
+```
 
-    ## Architecture
+See [docs/architecture.md](docs/architecture.md) for details.
 
-    ```mermaid
-    flowchart LR
-        A["Synthetic input"] --> B["Python processing"]
-        B --> C["Rules / validation"]
-        C --> D["Generated local output"]
-        D --> E["Future API / dashboard"]
-    ```
+## Stack
 
-    See [docs/architecture.md](docs/architecture.md) for details.
+`Python` `JSON` `Serial diagnostics` `pyserial optional` `PyTest`
 
-    ## Stack
+## Run Locally
 
-    Current:
+```powershell
+python -m pip install -e .
+python examples/run_demo.py
+```
 
-    `Python` `JSON` `Serial diagnostics` `Synthetic ports`
+## Optional Real Mode
 
-    Planned evolution:
+```powershell
+python -m pip install -e ".[serial]"
+```
 
-    - pyserial
-- Windows COM scan
-- PyTest
-- Reports
-- GitHub Actions
+Real mode currently enumerates ports only. The default demonstration remains simulation mode.
 
-    ## Run Locally
+## Run Tests
 
-    ```powershell
-    python examples/run_demo.py
-    ```
+```powershell
+python -m pip install -e ".[dev]"
+pytest
+```
 
-    The demo uses only files under `data/sample/` and writes generated output
-    to ignored local folders.
+## Technical Decisions
 
-    ## Repository Workflow
+- Simulation mode is the default because the project must be demonstrable without hardware.
+- `pyserial` is optional because not every environment has serial devices.
+- Reports use only synthetic evidence unless a future real-mode read feature is explicitly added.
 
-    This project is intended to evolve through:
+## Roadmap
 
-    - Issues for planned work.
-    - Milestones for learning phases.
-    - Small branches and pull requests.
-    - Releases when a useful increment is ready.
+- Add guarded real read/write checks.
+- Add report export in Markdown.
+- Add hardware bench notes with generic public wiring only.
 
-    Draft issues are documented in [docs/github-issues.md](docs/github-issues.md).
+## Security and Independence
 
-    ## Roadmap
-
-    See [ROADMAP.md](ROADMAP.md).
-
-    ## Security and Independence
-
-    See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
+See [SECURITY.md](SECURITY.md) and [DISCLAIMER.md](DISCLAIMER.md).
