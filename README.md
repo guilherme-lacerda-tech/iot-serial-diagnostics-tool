@@ -82,6 +82,10 @@ Healthy ports: 2
 
 See [ROADMAP.md](ROADMAP.md).
 
+## Related Project
+
+- [usb-serial-driver-diagnostics-lab](https://github.com/guilherme-lacerda-tech/usb-serial-driver-diagnostics-lab): deeper Windows USB/driver/COM troubleshooting lab with structured JSON/HTML reports.
+
 ## Security
 
 The repository does not contain real hardware logs, serial captures, customer data or private identifiers.
